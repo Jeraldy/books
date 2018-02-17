@@ -1,0 +1,33 @@
+{% extends 'pages/base.html' %} {% load staticfiles %} {% load split_tag %} {% block content %}
+
+<div style="padding-left:20px;padding-right:20px;">
+    <div class="card" style="padding-left:10px;padding-right:10px;">
+        <form action="" method="GET">
+            <input value="{{request.GET.q}}" type="text" name="q" placeholder="Search" style="border-color:white">
+        </form>
+        <span class="s-text8 p-t-5 p-b-5">
+                            Showing 1–{{num_show}} of {{results}} results
+						</span>
+    </div>
+    <div class="card">
+        <ul class="collection">
+            {% for book in books %}
+            <li class="collection-item">
+                <div>{{book.title}}
+                    <a href="http://localhost:8000/static/files/{{book.book.url | cut:'/'}}" class="secondary-content"><i class="material-icons">send</i></a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        <!-- Pagination -->
+        <ul class="pagination">
+            <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+            {% for n in books.paginator.num_pages|times %}
+            <li class="waves-effect"><a href="?page={{n}}" class="item-pagination">{{n}}</a> </li>
+            {% endfor %}
+            <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+        </ul>
+
+    </div>
+</div>
+{% endblock %}
